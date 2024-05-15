@@ -1,5 +1,20 @@
 function buyvinyl() {
-    alert("Music pre-ordered! Come back at a later date to pick it up!")
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "accuracyv1.wav", true);
+    xhr.responseType = "blob";
+    xhr.onload = function() {
+        var urlCreator = window.URL || window.webkitURL;
+        var wavUrl = urlCreator.createObjectURL(this.response);
+        var tag = document.createElement('a');
+        tag.href = wavUrl;
+        tag.download = "accuracyv1.wav";
+        document.body.appendChild(tag);
+        tag.click();
+        document.body.removeChild(tag);
+    }
+    xhr.send();
+
+    alert("Music purchased! Check your downloads folder for the WAV file!")
 }
 
 function buybook() {
@@ -18,6 +33,5 @@ function buybook() {
     }
     xhr.send();
 
-    // download book.pdf to the user's computer
     alert("Book purchased! Check your downloads folder for the PDF!")
 }   
