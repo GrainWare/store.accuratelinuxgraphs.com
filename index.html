@@ -8,10 +8,43 @@
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
 </head>
+<script>
+    // add random animation delay to all elements
+    document.addEventListener("DOMContentLoaded", function() {
+        const elements = document.querySelectorAll('.blink, .stretched-blinking, .swag, .img-swag');
+        elements.forEach(el => {
+            const delay = Math.random() * 2; // Random delay between 0 and 2 seconds
+            el.style.animationDelay = `${delay}s`;
+        });
+    });
+
+    function superduper() {
+        // add swag class to all elements
+        const elements = document.querySelectorAll('body *');
+        elements.forEach(el => {
+            el.classList.add('swag');
+        });
+    }
+    function addtocart(item, price) {
+        // change cart text 
+        const cartElement = document.getElementById('cart');
+        const currentText = cartElement.textContent;
+        const currentCount = parseInt(currentText.match(/\d+/)[0]) || 0;
+        const newCount = currentCount + 1;
+        cartElement.textContent = `cart: at least ${newCount} items for at least ${price * newCount} dollars (aghhaghh)`;
+
+        // add cart item and price to localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push({ item, price });
+        localStorage.setItem('cart', JSON.stringify(cart));
+    }
+</script>
 <body>
     <ul>
         <li><a href="/">Home</a></li>
         <li><a href="/checkout.html">Checkout</a></li>
+        <li><p id="cart">cart: at least 0 items</p></li>
+        <li><a onclick="superduper()" class="swag">Super Duper Accuracy Mode</a></li>
     </ul>
     <h1 class="stretched-blinking">BUY NOW!</h1>
 
@@ -25,20 +58,39 @@
             <td class="blink">BUY OUR BOOK</td>
             <td>$9999.99</td>
             <td><img src="img/book.png" alt="Product 1" height="100"></td>
-            <td><button onclick="buybook()">BUY NOW</button></td>
+            <td><button onclick="buybook()" class="swag">BUY NOW</button></td>
+            <td><button onclick="addtocart('BOOK', 9999.99)" class="swag">ADD TO CART</button></td>
         </tr>
         <tr>
             <td class="blink">BUY OUR SONG</td>
             <td>$9999.99</td>
             <td><img src="img/vinyl.png" alt="Product 2" height="100"></td>
-            <td><button onclick="buyvinyl()">BUY NOW</button></td>
+            <td><button onclick="buyvinyl()" class="swag">BUY NOW</button></td>
+            <td><button onclick="addtocart('SONG', 9999.99)" class="swag">ADD TO CART</button></td>
         </tr>
         <tr>
             <td class="blink">BUY OUR ALBUM</td>
             <td>$9999.99</td>
             <td><img src="img/cover.png" alt="Product 3" height="100"></td>
-            <td><button onclick="buyalbum()">BUY NOW</button></td>
+            <td><button onclick="buyalbum()" class="swag">BUY NOW</button></td>
+            <td><button onclick="addtocart('ALBUM', 9999.99)" class="swag">ADD TO CART</button></td>
+        </tr>
+        <tr>
+            <td class="blink">BUY OUR GRAPHS (EXPERIMENTAL)*</td>
+            <td>5 Million Grains Of Rice (OR $9999.99)</td>
+            <td><img src="https://accuratelinuxgraphs.com/assets/graphs/tuxcolors.gif" alt="Product 4" height="100"></td>
+            <td><button onclick="buygraphs()" class="swag">BUY NOW</button></td>
+            <td><button onclick="alert('An expected error has occured')" class="swag">ADD TO CART</button></td>
         </tr>
     </table>
+    <p class="blink">*$ is an Accuracy Metric System (AMS) unit of measurement and is not a real currency. This is still a unit of measuring currency, each $ is equal to the most crippling amount of debt you can have in the Accuracy Legal System (Coming soon to a regime near you).</p>
+    <h1 class="stretched-blinking">SECURED BY</h1>
+    <img src="https://accuratelinuxgraphs.com/assets/img/tux.gif" class="img-swag" height="100">
+    <p class="blink">TUX</p>
+    <img src="https://accuratelinuxgraphs.com/assets/ico/grain.png" class="img-swag" height="100">
+    <p class="blink">GRAIN</p>
+    <noscript>
+        <p class="blink">YOU ARE INACCURATE.</p>
+    </noscript>
 </body>
 </html>

@@ -3,16 +3,111 @@
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Page Title</title>
+    <title>Checking out...</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
     <script src='main.js'></script>
-</head>
-<body>
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/checkout.html">Checkout</a></li>
-    </ul>
-    <h1>Checking out... this will take a long while...</h1>
+    <style>
+      body { margin: 0; }
+      #container { display: flex; height: 100vh; }
+      .console-pane { flex: 1; padding: 10px; background: #000; color: #0f0; font-family: monospace; overflow-y: auto; }
+      .console-pane p { margin: 0; }
+    </style>
+  </head>
+
+  <script type="module">
+(async () => {
+    const left = document.getElementById('console-left');
+    const right = document.getElementById('console-right');
+    let appendTarget = left;
+
+    // initial loading message
+    left.innerHTML = '<p>Loading AccuraConsole...</p>';
+    left.scrollTop = left.scrollHeight;
+
+    // initial delay
+    await new Promise(r => setTimeout(r, 2000));
+    appendTarget.innerHTML += '<p>AccuraConsole is ready!</p>';
+    appendTarget.scrollTop = appendTarget.scrollHeight;
+
+    try {
+        const response = await fetch('https://accuratelinuxgraphs.com/api/accuracy');
+        const data = await response.text();
+        const lines = data.split('\n');
+        for (const line of lines) {
+            if (Math.random() < 0.75) continue;
+            await new Promise(r => setTimeout(r, Math.random() * 2));
+            appendTarget.innerHTML += `<p>${line}</p>`;
+            appendTarget.scrollTop = appendTarget.scrollHeight;
+        }
+    } catch (error) {
+        console.error('Error fetching accuracy data:', error);
+        appendTarget.innerHTML += '<p>Error fetching accuracy data. Have a neutral day!</p>';
+        appendTarget.scrollTop = appendTarget.scrollHeight;
+    }
+
+    // switch to right pane for any further output
+    appendTarget = right;
+
+    appendTarget.innerHTML += '<p>Starting checkout process...</p>';
+    appendTarget.scrollTop = appendTarget.scrollHeight;
+
+    // process items from cart
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let total = 0;
+    if (cart.length === 0) {
+        appendTarget.innerHTML += '<p>No items to process.</p>';
+        appendTarget.scrollTop = appendTarget.scrollHeight;
+    } else {
+        for (const {item, price} of cart) {
+            appendTarget.innerHTML += `<p>Analyzing item ${item} at price ${price}</p>`;
+            appendTarget.scrollTop = appendTarget.scrollHeight;
+            await new Promise(r => setTimeout(r, 1000));
+
+            total += price;
+            appendTarget.innerHTML += `<p>Using AccuMoney to take money (${total}) from mind</p>`;
+            appendTarget.scrollTop = appendTarget.scrollHeight;
+            await new Promise(r => setTimeout(r, 1000));
+
+            appendTarget.innerHTML += `<p>Transaction complete for item ${item} at price ${price}</p>`;
+            appendTarget.scrollTop = appendTarget.scrollHeight;
+            await new Promise(r => setTimeout(r, 1000));
+
+            appendTarget.innerHTML += `<p>Delivering product for item ${item} at price ${price}</p>`;
+            appendTarget.scrollTop = appendTarget.scrollHeight;
+
+            // trigger actual purchase/download based on item
+            switch (item) {
+                case 'BOOK': buybook(); break;
+                case 'SONG': buyvinyl(); break;
+                case 'ALBUM': buyalbum(); break;
+                case 'GRAPHS': buygraphs(); break;
+            }
+
+            await new Promise(r => setTimeout(r, 1000));
+        }
+    }
+
+    // clear cart after processing
+    localStorage.removeItem('cart');
+    appendTarget.innerHTML += `<p>Checkout complete! Total: ${total} dollars (aghhaghh)</p>`;
+    appendTarget.scrollTop = appendTarget.scrollHeight;
+
+    // go back to home after 3000ms
+    setTimeout(() => {
+        appendTarget.innerHTML += '<p>Redirecting to home...</p>';
+        appendTarget.scrollTop = appendTarget.scrollHeight;
+        window.location.href = '/';
+    }, 3000);
+  })();
+  </script>
+  <body>
+  <div id="container">
+    <div id="console-left" class="console-pane"></div>
+    <div id="console-right" class="console-pane"></div>
+  </div>
+     <noscript>
+         <p>An expected error has occured. Have a neutral day!</p>
+     </noscript>
 </body>
 </html>

@@ -54,3 +54,7 @@ function buyalbum() {
 
     alert("Album purchased! Check your downloads folder for the ZIP file!")
 }
+
+function buygraphs() {
+    alert("We have deduced that you do not have 5 million grains of rice or $9999.99. Maybe you do? We don't care. Have a terrible day.")
+}

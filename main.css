@@ -51,6 +51,20 @@ button {
     text-align: center;
 }
 
+.swag {
+    animation: download-button-swag 20s infinite alternate;
+    border: 2px solid lime;
+    padding: 10px 20px;
+    margin-left: 40%;
+    transform-origin: center;
+}
+
+.img-swag {
+    animation: download-button-swag 5s infinite alternate;
+    border: 2px solid lime;
+    transform-origin: center;
+}
+
 @keyframes stretched-blinking {
     0%, 100% {
         letter-spacing: 0.1em;
@@ -71,5 +85,43 @@ button {
     }
     100% {
         opacity: 0;
+    }
+}
+
+@keyframes download-button-swag {
+    0% {
+        transform: scaleX(1) scaleY(1) rotate(0deg);
+        margin-left: -60%;
+        border: 2px red solid;
+    }
+    10% {
+        transform: scaleX(0.4) scaleY(0.9) rotate(45deg) skew(10deg);
+        border-color: orange;
+    }
+    20% {
+        transform: scaleX(1.2) scaleY(0.5) rotate(-30deg);
+        border-color: yellow;
+    }
+    30% {
+        transform: scaleX(0.7) scaleY(1.1) rotate(90deg) skew(-15deg);
+        border-color: green;
+    }
+    40% {
+        transform: scaleX(1.5) scaleY(0.4) rotate(-120deg);
+        border-color: blue;
+    }
+    60% {
+        transform: scaleX(0.6) scaleY(1.8) rotate(180deg) skew(20deg);
+        border-color: indigo;
+        margin-left: -20%;
+    }
+    80% {
+        transform: scaleX(1.8) scaleY(0.7) rotate(540deg);
+        margin-left: 20%;
+    }
+    100% {
+        transform: scaleX(1) scaleY(1) rotate(1080deg);
+        margin-left: 40%;
+        border: 10px violet solid;
     }
 }
